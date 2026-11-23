@@ -1,0 +1,44 @@
+[
+  {
+    "title": "Trade Me Style: Heavy-Duty Galvanised Steel Gate 3.6m",
+    "description": "Six-bar farm gate with chains and gudgeons, straight and solid with light surface patina",
+    "start_price": 80,
+    "reserve_price": 140
+  },
+  {
+    "title": "Electric Fence Energiser 12V / 230V Dual Power",
+    "description": "Tested working fence energiser suitable for strip grazing and paddock subdivisions",
+    "start_price": 65,
+    "reserve_price": 110
+  },
+  {
+    "title": "Stainless Steel Milk Bucket & Lid 20L",
+    "description": "Clean food-grade stainless bucket with sealing lid for shed or calf-rearing duties",
+    "start_price": 30,
+    "reserve_price": 55
+  },
+  {
+    "title": "No. 8 High-Tensile Fencing Wire Coil 25kg",
+    "description": "Unopened galvanised fencing wire coil stored dry in implement shed",
+    "start_price": 45,
+    "reserve_price": 75
+  },
+  {
+    "title": "Vintage Milk Can",
+    "description": "40L stainless steel milk can, good condition",
+    "start_price": 50,
+    "reserve_price": 120
+  },
+  {
+    "title": "Honda Quad Bike",
+    "description": "2015 TRX420, 3,200 hours, recent service",
+    "start_price": 4000,
+    "reserve_price": 6500
+  },
+  {
+    "title": "Dirt Bike",
+    "description": "Honda CRF250, well maintained",
+    "start_price": 8000,
+    "reserve_price": 10000
+  }
+]
