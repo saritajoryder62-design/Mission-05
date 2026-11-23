@@ -38,12 +38,26 @@ The status should be `Running`.
 
 ## Setup
 
+Clone the repository, install the packages, then seed the database:
+
 ```powershell
+git clone https://github.com/saritajoryder62-design/Mission-05.git
+cd Mission-05
 npm install
 npm run seed
 ```
 
-`npm run seed` clears the `auctions` collection and loads the 7 starter items from `seed-data.json` into the `mission_5` database.
+`npm install` downloads the packages listed in `package.json` into a `node_modules` folder.
+
+`npm run seed` clears the `auctions` collection and loads the 7 starter items from `seed-data.json` into the `mission_5` database. You should see:
+
+```text
+✔ Inserted 7 auction record(s) into mission_5.
+```
+
+To check the data, open MongoDB Compass, connect to `mongodb://127.0.0.1:27017`, and open `mission_5` > `auctions`. You can also run `node cli.js list` in the terminal.
+
+Then start the API with `npm start` and open `http://localhost:3000/api/auctions/search?q=milk` in a browser.
 
 ## CLI commands
 
@@ -83,7 +97,7 @@ The search ignores upper and lower case, so `milk`, `Milk` and `MILK` give the s
 
 Request:
 
-```
+```text
 GET http://localhost:3000/api/auctions/search?q=milk
 ```
 
