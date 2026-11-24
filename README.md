@@ -9,85 +9,94 @@ The project has two parts:
 - **CLI tool** (`cli.js`): seeds, lists and deletes auction data from the terminal.
 - **Search API** (`server.js`): returns all auction items, or finds items that match a keyword.
 
-## Tech used
+## Quick start
 
-| Tool | What it does |
-| --- | --- |
-| MongoDB | The database, running locally |
-| MongoDB Compass | A visual app to browse the data |
-| Mongoose | Lets JavaScript talk to MongoDB using a schema |
-| Commander | Turns `cli.js` into terminal commands |
-| Chalk | Colours the terminal output |
-| Express | Runs the API |
+You need [Node.js](https://nodejs.org) and [MongoDB Community Server](https://www.mongodb.com/try/download/community) installed. MongoDB Compass is optional.
 
-## Before you start
-
-You need:
-
-- Node.js
-- MongoDB Community Server running on `127.0.0.1:27017`
-- MongoDB Compass (optional, to look at the data)
-
-On Windows, check that MongoDB is running:
-
-```powershell
-Get-Service -Name "*Mongo*"
-```
-
-The status should be `Running`.
-
-## Setup
-
-Clone the repository, install the packages, then seed the database:
+Run these commands in PowerShell:
 
 ```powershell
 git clone https://github.com/saritajoryder62-design/Mission-05.git
 cd Mission-05
 npm install
 npm run seed
-```
-
-`npm install` downloads the packages listed in `package.json` into a `node_modules` folder.
-
-`npm run seed` clears the `auctions` collection and loads the 7 starter items from `seed-data.json` into the `mission_5` database. You should see:
-
-```text
-✔ Inserted 7 auction record(s) into mission_5.
-```
-
-To check the data, open MongoDB Compass, connect to `mongodb://127.0.0.1:27017`, and open `mission_5` > `auctions`. You can also run `node cli.js list` in the terminal.
-
-Then start the API with `npm start` and open `http://localhost:3000/api/auctions/search?q=milk` in a browser.
-
-## CLI commands
-
-```powershell
-node cli.js seed --reset     # clear the collection, then load seed-data.json
-node cli.js seed             # add seed-data.json without clearing (creates duplicates)
-node cli.js list             # show up to 20 auctions as coloured cards
-node cli.js list -n 5        # show only 5 auctions
-node cli.js clear --id <id>  # delete one auction by its _id
-node cli.js clear            # delete every auction
-node cli.js --help           # show all commands
-```
-
-Use `list` to find an item's `_id` before you delete it.
-
-## Run the API
-
-```powershell
+node cli.js list
 npm start
 ```
 
-The API runs at `http://localhost:3000`. Use `npm run dev` instead to restart the server when a file changes.
+What each step does:
 
-### Endpoints
+1. `git clone` downloads the project. `cd Mission-05` moves into the folder.
+2. `npm install` downloads the packages into a `node_modules` folder.
+3. `npm run seed` clears the `auctions` collection, then loads the 7 starter items from `seed-data.json` into the `mission_5` database.
+4. `node cli.js list` shows the items, so you can see that the seed worked.
+5. `npm start` runs the API at `http://localhost:3000`.
+
+You do not need a `.env` file. The project connects to MongoDB on your own computer (`mongodb://127.0.0.1:27017/mission_5`).
+
+### Check that it works
+
+After `npm run seed`, you should see:
+
+```text
+ℹ Connected to mission_5 database
+⚠ Cleared 7 existing auction record(s).
+✔ Inserted 7 auction record(s) into mission_5.
+Connection closed.
+```
+
+On a first run the database is empty, so the `Cleared` line shows 0.
+
+After `npm start`, open this link in a browser:
+
+```text
+http://localhost:3000/api/auctions/search?q=milk
+```
+
+You should get 2 results. To stop the API, press `Ctrl + C` in the terminal.
+
+To look at the data in MongoDB Compass, connect to `mongodb://127.0.0.1:27017`, then open `mission_5` > `auctions`.
+
+## CLI commands
+
+| Command | What it does |
+| --- | --- |
+| `node cli.js list` | Show up to 20 auctions as coloured cards |
+| `node cli.js list -n 5` | Show only 5 auctions |
+| `node cli.js seed --reset` | Delete all auctions, then load `seed-data.json` (same as `npm run seed`) |
+| `node cli.js seed` | Add `seed-data.json` without deleting first. This makes duplicates |
+| `node cli.js clear --number 3` | Delete auction #3 from the list |
+| `node cli.js clear <id>` | Delete one auction by its `_id` |
+| `node cli.js delete <id>` | Same as `clear <id>` |
+| `node cli.js clear --id <id>` | Same as `clear <id>` |
+| `node cli.js clear` | Delete **every** auction. It does not ask first |
+| `node cli.js --help` | Show all commands |
+
+### Delete an item
+
+1. Run `node cli.js list` to see each item's number and `_id`.
+2. Run `node cli.js clear --number 3` to delete item #3.
+3. Run `node cli.js list` again. The numbers move up after each delete.
+
+### Start again with fresh data
+
+If you deleted too much, or the list has duplicates, run:
+
+```powershell
+npm run seed
+```
+
+This puts back the 7 starter items.
+
+## API
+
+Start the API with `npm start`. Use `npm run dev` instead to restart the server each time you save a file.
 
 | Method | URL | What it returns |
 | --- | --- | --- |
-| GET | `/` | A message to confirm the server is running |
-| GET | `/api/auctions` | All auction items |
-| GET | `/api/auctions/search?q=milk` | Items where the title or description contains the keyword |
+| GET | `http://localhost:3000/` | A message that shows the server is running |
+| GET | `http://localhost:3000/api/auctions` | All auction items |
+| GET | `http://localhost:3000/api/auctions/search?q=milk` | Items with the keyword in the title or description |
 
 Each item has only four fields: `title`, `description`, `start_price` and `reserve_price` (plus its `_id`).
 
@@ -134,6 +143,57 @@ Response:
 | `/api/auctions/search?q=x` (1 letter) | 400 | `{ "error": "Search term must be at least 2 characters" }` |
 | Any unknown URL | 404 | `{ "error": "Route not found: GET /..." }` |
 
+## Problems and fixes
+
+### `ECONNREFUSED 127.0.0.1:27017`, or a command hangs for 30 seconds
+
+MongoDB is not running. Check it in PowerShell:
+
+```powershell
+Get-Service -Name "*Mongo*"
+```
+
+If the status is `Stopped`, start it from an administrator PowerShell window:
+
+```powershell
+Start-Service -Name MongoDB
+```
+
+### `node cli.js list` shows no items
+
+The database is empty. Run `npm run seed`.
+
+### The list shows each item twice
+
+You ran `node cli.js seed` without `--reset`. Run `npm run seed` to clear the data and load it once.
+
+### `Cannot find package 'mongoose'` (or `commander`, `chalk`, `express`)
+
+The packages are not installed. Run `npm install` in the project folder.
+
+### `EADDRINUSE: address already in use :::3000`
+
+Something else uses port 3000. This is often the API already running in another terminal. Stop the other one with `Ctrl + C`, or use a different port:
+
+```powershell
+$env:PORT = 4000; npm start
+```
+
+### The connection fails when you use `localhost`
+
+Connect with `127.0.0.1`, not `localhost`. Node can turn `localhost` into an IPv6 address, and then the connection to MongoDB fails.
+
+## Use a different database (optional)
+
+The project uses your local MongoDB by default. To use another one, such as MongoDB Atlas, set `MONGO_URI` before you run a command:
+
+```powershell
+$env:MONGO_URI = "mongodb+srv://<user>:<password>@<cluster>/mission_5"
+npm run seed
+```
+
+The setting lasts only until you close that PowerShell window. Never commit a connection string that contains a password.
+
 ## Project files
 
 | File | What it does |
@@ -142,13 +202,20 @@ Response:
 | `server.js` | Starts the Express API and connects to the database |
 | `routes/auctions.js` | The `/api/auctions` and `/api/auctions/search` routes |
 | `models/Auction.js` | The schema: title, description, start_price, reserve_price |
-| `db.js` | The connection to the local `mission_5` database |
-| `seed-data.json` | The starter auction items |
+| `db.js` | Connects to MongoDB: uses `MONGO_URI` if set, otherwise the local `mission_5` database |
+| `seed-data.json` | The 7 starter auction items |
 | `apishape.js` | Describes the shape of an auction record the API returns |
 
-## Tip
+## Tech used
 
-Connect with `127.0.0.1`, not `localhost`. Node can resolve `localhost` to an IPv6 address, and the connection to MongoDB then fails.
+| Tool | What it does |
+| --- | --- |
+| MongoDB | The database, running locally |
+| MongoDB Compass | A visual app to browse the data |
+| Mongoose | Lets JavaScript talk to MongoDB using a schema |
+| Commander | Turns `cli.js` into terminal commands |
+| Chalk | Colours the terminal output |
+| Express | Runs the API |
 
 ## Author
 

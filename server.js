@@ -9,7 +9,7 @@ app.use(express.json());
 
 // Health check: visit http://localhost:3000 to confirm the server is up
 app.get('/', (req, res) => {
-  res.json({ status: 'ok', message: 'Mission 5 Auction API running' });
+  res.json({ status: 'ok', message: 'Mission 5 Auction API running ' });
 });
 
 // All auction routes live under /api/auctions
