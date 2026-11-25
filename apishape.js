@@ -3,12 +3,13 @@
 // so createdAt and updatedAt are stored in MongoDB but never sent.
 
 // One auction item
+// Each key is a field name, and each value is the type that field holds.
 export const auctionShape = {
-  _id: 'string',
-  title: 'string',
-  description: 'string',
-  start_price: 'number',
-  reserve_price: 'number',
+  _id: 'string', // unique id MongoDB gives every document, e.g. "6b03dd57819e8837a29c1929"
+  title: 'string', // name of the item
+  description: 'string', // details about the item
+  start_price: 'number', // price the bidding opens at
+  reserve_price: 'number', // lowest price the seller will accept
 };
 
 // GET /api/auctions
