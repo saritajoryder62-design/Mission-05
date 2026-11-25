@@ -1,3 +1,6 @@
+#!/usr/bin/env node
+// The line above tells the computer to run this file with Node.
+// npm needs it to turn cli.js into the "mission5-cli" command (see "bin" in package.json).
 import fs from 'fs'; // reads files from disk (seed-data.json)
 import path from 'path'; // builds file paths that work on any computer
 import { fileURLToPath } from 'url'; // turns this file's URL into a normal path
