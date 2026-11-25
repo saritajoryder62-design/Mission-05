@@ -72,6 +72,23 @@ To look at the data in MongoDB Compass, connect to `mongodb://127.0.0.1:27017`, 
 | `node cli.js clear` | Delete **every** auction. It does not ask first |
 | `node cli.js --help` | Show all commands |
 
+### Run the CLI from any folder (optional)
+
+Run this once in the project folder:
+
+```powershell
+npm link
+```
+
+Now you can type `mission5-cli` instead of `node cli.js`, from any folder. For example:
+
+```powershell
+mission5-cli list
+mission5-cli clear --number 3
+```
+
+To remove the `mission5-cli` command again, run `npm unlink -g cli` in the project folder.
+
 ### Delete an item
 
 1. Run `node cli.js list` to see each item's number and `_id`.
@@ -198,7 +215,7 @@ The setting lasts only until you close that PowerShell window. Never commit a co
 
 | File | What it does |
 | --- | --- |
-| `cli.js` | Defines the `seed`, `list` and `clear` commands |
+| `cli.js` | Defines the `seed`, `list` and `clear` (also called `delete`) commands |
 | `server.js` | Starts the Express API and connects to the database |
 | `routes/auctions.js` | The `/api/auctions` and `/api/auctions/search` routes |
 | `models/Auction.js` | The schema: title, description, start_price, reserve_price |

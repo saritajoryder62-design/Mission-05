@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Mission 5 auction CLI and API",
   "main": "server.js",
+  "bin": {
+    "mission5-cli": "./cli.js"
+  },
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
